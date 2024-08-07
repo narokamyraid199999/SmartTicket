@@ -1,0 +1,60 @@
+﻿
+@model List<Movie>
+
+@if (TempData["delMsg"] != null)
+{
+    <p class="text-danger">@TempData["delMsg"]</p>
+}
+
+<div class="row gap-5">
+    @foreach (var movie in Model)
+    {
+        <div class="card col-5 " >
+            <div class="card-header fw-bold h5 py-3">
+                @movie.Name
+            </div>
+            <div class="px-3 mt-3 d-flex gap-3">
+                <div style="width:35%;">
+                    <img class="w-100" src="@movie.ImageUrl" />
+                </div>
+                <div class="my-2">
+                    <p>Price:<span style="background-color:gray; color:white;" class="p-2 mx-1 rounded-2"> @movie.Price$</span></p>
+                    <p>Cenima: @movie.Cinema.Name</p>
+                    <p>Start data: @movie.StartDate</p>
+                    <p>End data: @movie.EndDate</p>
+                    <p>Category: <a asp-controller="Category" asp-action="Details" asp-route-id="@movie.Category.Id">@movie.Category.Name</a></p>
+
+                    @if (movie.Status.Contains("Expired")){
+                        <p class="bg-danger d-inline p-2 text-white rounded-2">@movie.Status</p>
+                    }
+                    else
+                    {
+                        <p class="bg-primary d-inline p-2 text-white rounded-2">@movie.Status</p>
+                    }
+
+                </div>
+            </div>
+            
+            <!--
+            <div class="d-flex my-4 ">
+                <iframe width="320px" height="200px" src="https://www.youtube.com/embed/@movie.TrailerUrl">
+                </iframe>
+
+            </div>
+
+            -->
+
+            <div class="d-flex my-4 justify-content-center">
+                <div>
+                    <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">
+                        <button class="btn btn-outline-success">More Details</button>
+                    </a>
+                    
+                    <button class="btn btn-success">Book Ticket</button>
+
+                </div>
+            </div>
+
+        </div>
+    }
+</div>

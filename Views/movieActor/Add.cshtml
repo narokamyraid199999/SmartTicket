@@ -1,0 +1,32 @@
+﻿@model MovieActor
+
+
+<div class="my-5">
+	<form method="post" asp-controller="movieActor" asp-action="Add">
+		<h2 class="my-4">New MovieActor</h2>
+		
+
+		<div class="my-4">
+			<label class="mb-1">Movie</label>
+			<select class="form-control" asp-for="MovieId" asp-items="ViewBag.movieId">
+			</select>
+		</div>
+
+		<div class="my-4">
+			<label class="mb-1">Actor</label>
+			<select class="form-control" asp-for="ActorId" asp-items="ViewBag.actorId">
+			</select>
+		</div>
+
+		<div class="my-4">
+			<button class="btn btn-primary" type="submit">Save</button>
+			<a class="btn btn-info mx-2" asp-controller="movieActor" asp-action="Index">Back</a>
+		</div>
+
+	</form>
+</div>
+
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

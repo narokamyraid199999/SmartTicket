@@ -1,0 +1,43 @@
+﻿@model SmartTicket.ViewModel.RegesterViewModel
+
+
+@{
+    ViewData["Title"] = "Regester";
+}
+
+<h1>Regester</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Regester">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group my-3">
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group my-3">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group my-3">
+                <label asp-for="ConfirmPassword" class="control-label"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group my-3">
+                <input type="submit" value="Regester" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="mt-2">
+    <a href="https://localhost:7227/Account/Login">Login Now</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

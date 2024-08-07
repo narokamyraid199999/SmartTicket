@@ -1,0 +1,55 @@
+﻿<! -- strong type generac -->
+@model ICollection<Movie>
+
+
+@if (TempData["msg"] != null)
+{
+	<h3 class="text-info">@TempData["msg"]</h3>
+}
+
+<h2 class="my-5">My Movies</h2>
+
+<div>
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<td>Id</td>
+				<td>Name</td>
+				<td>Description</td>
+				<td>Price</td>
+				<td>Status</td>
+				<td></td>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var elm in Model)
+			{
+				<tr>
+					<td class="p-2">@elm.Id</td>
+					<td class="p-2">@elm.Name</td>
+					<td class="p-2">@elm.Description</td>
+					<td class="p-2">@elm.Price$</td>
+					<td class="p-2">@elm.Status</td>
+
+					<td class="px-3 py-2">
+						<div class="d-flex align-items-center gap-3">
+							<div class="w-100">
+								<!-- <a asp-controller="Courses" asp-action="Edit" asp-route-id="elm.Id" class="btn w-100  btn-info">Edit</a> -->
+								<a asp-controller="Movies" asp-action="Edit" asp-route-Id="@elm.Id" class="btn w-100  btn-info">Edit</a>
+
+							</div>
+							<div class="w-100">
+								<a asp-controller="Movies" asp-action="Delete" asp-route-Id="@elm.Id" class="btn w-100  btn-danger">Delete</a>
+							</div>
+						</div>
+					</td>
+				</tr>
+			}
+
+		</tbody>
+
+	</table>
+	<div class="my-4">
+		<a asp-controller="Movies" asp-action="Add" class="btn btn-primary">New Movie</a>
+	</div>
+</div>

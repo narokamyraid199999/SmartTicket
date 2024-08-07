@@ -1,0 +1,50 @@
+﻿@model Movie
+
+
+<div class="card ">
+    <div class="card-header fw-bold h5 py-3">
+        @Model.Name
+    </div>
+    <div class="px-3 mt-3 d-flex gap-3">
+        <div style="width:35%;">
+            <img class="w-100" src="@Model.ImageUrl" />
+        </div>
+        <div class="my-2">
+            <p class="mb-4">@Model.Description</p>
+            <p>Price:<span style="background-color:gray; color:white;" class="p-2 mx-1 rounded-2"> @Model.Price$</span></p>
+            <p>Cenima: @Model.Cinema.Name</p>
+            <p>Start data: @Model.StartDate</p>
+            <p>End data: @Model.EndDate</p>
+            <p>Category: <a asp-controller="Category" asp-action="Details" asp-route-id="@Model.Category.Id">@Model.Category.Name</a></p>
+            @if (ViewBag.actos != null)
+            {
+                <div class="d-flex">
+                    @foreach (var actorMovie in ViewBag.actos)
+                    {
+                        <a asp-controller="Actor" asp-action="Details" asp-route-id="@actorMovie.Actor.Id">
+                            <img style="width:80px;height:80px" class="rounded-circle" src="@actorMovie.Actor.Image" />
+
+                        </a>
+                    }
+                </div>
+            }
+
+
+            <div class=" mt-5 mb-3">
+                <p style="font-size:1.4rem;" class="mb-2">Trailer</p>
+
+                <iframe width="700px" height="400px" src="https://www.youtube.com/embed/@Model.TrailerUrl">
+                </iframe>
+
+            </div>
+
+            <button style="font-size:1.4rem;" class="btn mb-4 btn-success">Book Ticket</button>
+
+
+        </div>
+
+    </div>
+
+    </div>
+
+</div>
