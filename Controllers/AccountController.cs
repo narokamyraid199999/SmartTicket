@@ -31,7 +31,7 @@ namespace SmartTicket.Controllers
 
 				IdentityUser user = new IdentityUser();
 				user.UserName = newUserName.Username;
-				user.Email = newUserName.Username;
+				user.Email = newUserName.Email;
 
 
 				IdentityResult res = await _MyUserManager.CreateAsync(user, newUserName.Password);

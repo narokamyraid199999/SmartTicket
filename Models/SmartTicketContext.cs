@@ -16,7 +16,15 @@ namespace SmartTicket.Models
 
 		public DbSet<Movie> Movies { get; set; }
 
-        public DbSet<MovieActor> MovieActors { get; set; }
+        public DbSet<Cart> carts { get; set; }
+
+        public DbSet<cartDetails> cartDetails { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+
+		public DbSet<OrderDetails> OrderDetails { get; set; }
+
+		public DbSet<MovieActor> MovieActors { get; set; }
 
     }
 }

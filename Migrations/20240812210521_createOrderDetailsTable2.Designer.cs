@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartTicket.Models;
 
@@ -11,9 +12,11 @@ using SmartTicket.Models;
 namespace SmartTicket.Migrations
 {
     [DbContext(typeof(SmartTicketContext))]
-    partial class SmartTicketContextModelSnapshot : ModelSnapshot
+    [Migration("20240812210521_createOrderDetailsTable2")]
+    partial class createOrderDetailsTable2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -9,8 +9,15 @@
     @foreach (var movie in Model)
     {
         <div class="card col-5 ">
-            <div class="card-header fw-bold h5 py-3">
-                @movie.Name
+            <div class="card-header fw-bold py-3">
+                <div class="d-flex justify-content-between">
+                    <p>@movie.Name</p>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-controller="Movies" asp-action="Edit" asp-route-id="@movie.Id"> <i class="bi btn btn-outline-primary bi-pencil-square"></i></a>
+                    }
+                </div>
+
             </div>
             <div class="px-3 mt-3 d-flex gap-3">
                 <div style="width:35%;">

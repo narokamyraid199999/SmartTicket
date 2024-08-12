@@ -36,8 +36,8 @@ namespace SmartTicket.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Add()
         {
-			ViewBag.CatId = new SelectList(await _cinemaService.GetAll(), "Id", "Name");
-			ViewBag.cinemaId = new SelectList(await _categoryService.GetAll(), "Id", "Name");
+			ViewBag.CatId = new SelectList(await _categoryService.GetAll(), "Id", "Name");
+			ViewBag.cinemaId = new SelectList(await _cinemaService.GetAll(), "Id", "Name");
 
 			return View();
         }
@@ -52,10 +52,10 @@ namespace SmartTicket.Controllers
                 return RedirectToAction("Index", "Home");
 			}
 
-            ViewBag.CatId = new SelectList(await _cinemaService.GetAll(), "Id", "Name");
-            ViewBag.cinemaId = new SelectList(await _categoryService.GetAll(), "Id", "Name");
+			ViewBag.CatId = new SelectList(await _categoryService.GetAll(), "Id", "Name");
+			ViewBag.cinemaId = new SelectList(await _cinemaService.GetAll(), "Id", "Name");
 
-            return View(newMovie);
+			return View(newMovie);
 		}
 
         [HttpGet]
@@ -79,6 +79,10 @@ namespace SmartTicket.Controllers
             {
                 ViewBag.actos = tempActors;
             }
+
+            movie.Views += 1;
+
+            await _movieService.commit();
 
             return View(movie);
         }
@@ -107,6 +111,44 @@ namespace SmartTicket.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit(int id)
+        {
 
-    }
+            if (id == 0)
+            {
+                return NotFound("Invalid movie id");
+            }
+
+            var movieEntity = await _movieService.getById(id);
+
+            if (movieEntity == null)
+            {
+                return NotFound("Invalid movie id");
+            }
+			ViewBag.CatId = new SelectList(await _categoryService.GetAll(), "Id", "Name");
+			ViewBag.cinemaId = new SelectList(await _cinemaService.GetAll(), "Id", "Name");
+
+			return View(movieEntity);
+        }
+
+		[HttpPost]
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> Edit(int id, Movie newMovie)
+		{
+			if (ModelState.IsValid)
+			{
+				await _movieService.Update(id, newMovie);
+				return RedirectToAction("Index", "Home");
+			}
+
+			ViewBag.CatId = new SelectList(await _categoryService.GetAll(), "Id", "Name");
+			ViewBag.cinemaId = new SelectList(await _cinemaService.GetAll(), "Id", "Name");
+
+			return View(newMovie);
+		}
+
+
+	}
 }

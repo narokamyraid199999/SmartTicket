@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartTicket.Models;
 
@@ -11,9 +12,11 @@ using SmartTicket.Models;
 namespace SmartTicket.Migrations
 {
     [DbContext(typeof(SmartTicketContext))]
-    partial class SmartTicketContextModelSnapshot : ModelSnapshot
+    [Migration("20240811222258_createCartWithCartDetailsTable")]
+    partial class createCartWithCartDetailsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -392,48 +395,6 @@ namespace SmartTicket.Migrations
                     b.ToTable("MovieActors");
                 });
 
-            modelBuilder.Entity("SmartTicket.Models.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("userId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("userId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("SmartTicket.Models.OrderDetails", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("movieId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("orderId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("movieId");
-
-                    b.HasIndex("orderId");
-
-                    b.ToTable("OrderDetails");
-                });
-
             modelBuilder.Entity("SmartTicket.Models.cartDetails", b =>
                 {
                     b.Property<int>("Id")
@@ -551,36 +512,6 @@ namespace SmartTicket.Migrations
                     b.Navigation("Actor");
 
                     b.Navigation("Movie");
-                });
-
-            modelBuilder.Entity("SmartTicket.Models.Order", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
-                        .WithMany()
-                        .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("SmartTicket.Models.OrderDetails", b =>
-                {
-                    b.HasOne("SmartTicket.Models.Movie", "Movie")
-                        .WithMany()
-                        .HasForeignKey("movieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SmartTicket.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("orderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Movie");
-
-                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("SmartTicket.Models.cartDetails", b =>

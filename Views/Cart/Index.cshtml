@@ -1,0 +1,90 @@
+﻿@model List<cartDetails>
+
+
+@if (TempData["msg"] != null)
+{
+	<h3 class="text-info">@TempData["msg"]</h3>
+}
+
+@{
+	double total = 0;
+}
+
+
+@if (Model.Count == 0)
+{
+	<h2 class="text-center text-danger">Your cart is empty!</h2>
+}else{
+	<h2 class="my-5 text-center">Your shopping cart</h2>
+
+	<div>
+		<table class="table  table-hover">
+			<thead>
+				<tr>
+					<td>Selected Amount</td>
+					<td>Movie</td>
+					<td>Price</td>
+					<td>Subtitle</td>
+					<td></td>
+					<td></td>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var elm in Model)
+				{
+					<tr>
+						<td class="p-2">1</td>
+						<td class="p-2">@elm.Movie.Name</td>
+						<td class="p-2">$@elm.Movie.Price</td>
+						<td class="p-2">$@elm.Movie.Price</td>
+						<td class="p-2">
+							<div>
+								<form method="post" asp-controller="Cart" asp-action="decrease" class="d-inline-block">
+									<input name="cartDetailsId" value="@elm.Id"  hidden/>
+									<button class="btn">
+									<i class="bi text-danger h5 bi-cart-dash"></i>
+									</button>
+								</form> | <form method="post" asp-controller="Cart" asp-action="increase" class="d-inline-block">
+									<input name="movieId" value="@elm.movieId" hidden />
+									<button class="btn">
+									<i class="bi text-success h5 bi-cart-plus"></i>
+								</button></form>
+							</div>
+						</td>
+					</tr>
+				}
+				<tr>
+					<td></td>
+					<td></td>
+					<td class="fw-bold">Total:</td>
+					<td>
+						@foreach (var elm in Model)
+						{
+							total += elm.Movie.Price;
+						}
+						<p>$@total</p>
+					</td>
+					<td></td>
+
+				</tr>
+
+			</tbody>
+
+		</table>
+		<div class="my-4">
+			<div class="d-flex justify-content-between ">
+				<div>
+					<a asp-controller="Home" asp-action="Index" class="btn btn-outline-primary">Add more items</a>
+				</div>
+				<div class="d-flex gap-3">
+					<a asp-controller="Cart" asp-action="Clear">
+						<button class="btn btn-outline-danger">Clear</button>
+					</a>
+					<a asp-controller="Cart" asp-action="checkout" class="btn btn-outline-success">Checkout</a>
+				</div>
+
+			</div>
+		</div>
+	</div>
+}
+

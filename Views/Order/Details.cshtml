@@ -1,0 +1,62 @@
+﻿
+@model List<OrderDetails>
+
+
+@if (TempData["msg"] != null)
+{
+	<h3 class="text-info">@TempData["msg"]</h3>
+}
+
+@{
+	double total = 0;
+}
+
+
+@if (Model.Count == 0)
+{
+	<h2 class="text-center text-danger">Your don't have any Items yet!</h2>
+	<div class="d-flex justify-content-center">
+		<a asp-controller="Home" asp-action="Index" class="btn btn-outline-info">Order now</a>
+	</div>
+}
+else
+{
+	<h2 class="my-3 ">Order Details</h2>
+
+	<div>
+		<table class="table  table-hover">
+			<thead>
+				<tr>
+					<td>Name</td>
+					<td>Price</td>
+					<td>start Date</td>
+					<td>end data</td>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var elm in Model)
+				{
+					<tr>
+
+						<td class="p-2"><a asp-controller="Movies" asp-action="Details" asp-route-id="@elm.movieId">@elm.Movie.Name</a></td>
+						<td class="p-2">$@elm.Movie.Price</td>
+						<td class="p-2">@elm.Movie.StartDate</td>
+						<td class="p-2">@elm.Movie.EndDate</td>
+					</tr>
+				}
+
+			</tbody>
+
+		</table>
+		<div class="my-4">
+			<div class="d-flex justify-content-end ">
+
+				<div >
+					<a asp-controller="Home" asp-action="Index" class="btn btn-outline-success">New order</a>
+				</div>
+
+			</div>
+		</div>
+	</div>
+}
+

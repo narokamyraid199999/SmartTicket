@@ -26,8 +26,8 @@ namespace SmartTicket.Services
             try
             {
                 _myDB.Movies.Add(entity);
-                commit();
-                state = true;
+				await commit();
+				state = true;
             }
             catch (Exception ex)
             {
@@ -48,8 +48,8 @@ namespace SmartTicket.Services
                 try
                 {
                     _myDB.Movies.Remove(tempMovie);
-                    commit();
-                    state = true;
+					await commit();
+					state = true;
                 }
                 catch (Exception ex) { }
             }
@@ -73,22 +73,21 @@ namespace SmartTicket.Services
         {
             bool state = false;
 
-            var tempMovie = _myDB.Movies.FirstOrDefault(x => x.Id == id);
-            if (tempMovie != null)
-            {
-                tempMovie.Description = entity.Description;
-                tempMovie.Name = entity.Name;
-                tempMovie.Status = entity.Status;
-                tempMovie.Price = entity.Price;
-                tempMovie.StartDate = entity.StartDate;
-                tempMovie.EndDate = entity.EndDate;
-                tempMovie.CategoryId = entity.CategoryId;
-                tempMovie.CinemaId=entity.CinemaId;
 
-                commit();
-            }
-
-            return state;
+		    var tempMovie = _myDB.Movies.FirstOrDefault(x => x.Id == id);
+		    if (tempMovie != null)
+		    {
+			    tempMovie.Description = entity.Description;
+			    tempMovie.Name = entity.Name;
+			    tempMovie.Status = entity.Status;
+			    tempMovie.Price = entity.Price;
+			    tempMovie.StartDate = entity.StartDate;
+			    tempMovie.EndDate = entity.EndDate;
+			    tempMovie.CategoryId = entity.CategoryId;
+			    tempMovie.CinemaId=entity.CinemaId;
+			    await commit();
+		    }
+			return state;
         }
 
         public async Task<List<Movie>> getMovieByCategoryId(int id)

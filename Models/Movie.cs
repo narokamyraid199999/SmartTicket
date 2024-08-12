@@ -17,6 +17,8 @@ namespace SmartTicket.Models
 
         public string ImageUrl { get; set; }
 
+		public int Views { get; set; } = 0;
+
         public string TrailerUrl { get; set; }
 
         public DateTime StartDate { get; set; }

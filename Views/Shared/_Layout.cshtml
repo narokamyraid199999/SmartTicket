@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SmartTicket.styles.css" asp-append-version="true" />
+    <link rel="icon" href="https://cdn-icons-png.freepik.com/512/6030/6030249.png" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
     <header>
@@ -22,21 +24,41 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Movies" asp-action="Index">Movies</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Actor" asp-action="Index">Actor</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="movieActor" asp-action="Index">movieActor</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="Add">Role</a>
-                        </li>
+                        <!-- Example single danger button -->
+                        <div class="dropdown">
+                            <button class="btn  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-text-left"></i>
+                                Dashboard
+                            </button>
+                            <ul class="dropdown-menu">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link dropdown-item text-dark" asp-area="" asp-controller="Cart" asp-action="Index">Cart</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link dropdown-item text-dark" asp-area="" asp-controller="Order" asp-action="Index">Orders</a>
+                                    </li>
+                                }
+
+                                <li class="nav-item">
+                                    <a class="nav-link dropdown-item text-dark" asp-area="" asp-controller="Movies" asp-action="Index">Movies</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link dropdown-item text-dark" asp-area="" asp-controller="Actor" asp-action="Index">Actor</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link dropdown-item text-dark" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link dropdown-item text-dark" asp-area="" asp-controller="movieActor" asp-action="Index">movieActor</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link dropdown-item text-dark" asp-area="" asp-controller="Role" asp-action="Add">Role</a>
+                                </li>
+                            </ul>
+                        </div>
+
 
                     </ul>
                 </div>
@@ -86,7 +108,7 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container my-5">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
