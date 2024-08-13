@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartTicket.Models;
+using SmartTicket.Services;
 using System.Security.Claims;
 
 namespace SmartTicket.Controllers
@@ -11,14 +12,16 @@ namespace SmartTicket.Controllers
     public class CartController : Controller
     {
 
-        public CartController(SmartTicketContext myDb, UserManager<IdentityUser> userManager)
+        public CartController(SmartTicketContext myDb, UserManager<IdentityUser> userManager, IEmailService emailService)
         {
             _myDB = myDb;
             _userManager = userManager;
+            _emailService = emailService;
         }
 
         private readonly SmartTicketContext _myDB;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IEmailService _emailService;
 
         [HttpGet]
         public IActionResult Index()
@@ -151,7 +154,7 @@ namespace SmartTicket.Controllers
             _myDB.Orders.Add(newOrder);
 			_myDB.SaveChanges();
 
-			var cartItems = _myDB.cartDetails.ToList();
+			var cartItems = _myDB.cartDetails.Include(x=>x.Movie).ToList();
 
             if (cartItems.Count == 0) 
             {
@@ -165,7 +168,16 @@ namespace SmartTicket.Controllers
 
             _myDB.SaveChanges();
 
-			foreach (var cartItem in cartItems)
+            string msgBody = "";
+
+            foreach (var cartItem in cartItems)
+            {
+                msgBody += $"Movie: {cartItem.Movie.Name}, Price: {cartItem.Movie.Price}, StartData: {cartItem.Movie.StartDate}, EndDate: {cartItem.Movie.EndDate}";
+                await _emailService.sendMailAsync(email, "Movie Ticket", msgBody);
+                msgBody = "";
+            }
+
+            foreach (var cartItem in cartItems)
 			{
 			    _myDB.cartDetails.Remove(cartItem);
             }

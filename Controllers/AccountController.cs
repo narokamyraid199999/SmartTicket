@@ -9,13 +9,15 @@ namespace SmartTicket.Controllers
 	public class AccountController : Controller
 	{
 
-		public AccountController(UserManager<IdentityUser> MyManager, SignInManager<IdentityUser> _signINManage) { 
+		public AccountController(UserManager<IdentityUser> MyManager, SignInManager<IdentityUser> _signINManage, SmartTicketContext myDb) { 
 			_MyUserManager = MyManager;
 			_mySignInManager = _signINManage;
+			_myDb = myDb;
         }
 
 		public readonly UserManager<IdentityUser> _MyUserManager;
         public readonly SignInManager<IdentityUser> _mySignInManager;
+		private readonly SmartTicketContext _myDb;
 
         [HttpGet]
 		public IActionResult Regester()
@@ -43,7 +45,10 @@ namespace SmartTicket.Controllers
 					if (roleRes.Succeeded)
 					{
                         await _mySignInManager.SignInAsync(user, true);
-                        // create cookie
+						// create cookie
+						_myDb.carts.Add(new Cart {UserId=user.Id });
+						_myDb.SaveChanges();
+
                         return RedirectToAction("Index", "Home");
                     }
                     else

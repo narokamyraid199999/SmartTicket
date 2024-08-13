@@ -19,7 +19,10 @@ namespace SmartTicket
 			builder.Services.AddScoped<IService<MovieActor>, MovieActorService>();
 			builder.Services.AddScoped<IService<Cinema>, CinemaService>();
 			builder.Services.AddScoped<ISearch, SearchService>();
+			builder.Services.AddScoped<IEmailService, MailService>();
 
+
+			builder.Services.Configure<EmailConfig>(builder.Configuration.GetSection("smtp"));
 
             builder.Services.AddDbContext<SmartTicketContext>(options =>
 			{
